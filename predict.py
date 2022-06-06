@@ -15,13 +15,13 @@ device = torch.device("cuda:0")
 
 trainmap = "Tr1" #Tr12345 Tr1 Tr2
 valmap = "Va2" #Va12345 Va1 Va2
-mapx = "Va2/"  #Te12345 Te1 Te2 
+mapx = "Te2/"  #Te12345 Te1 Te2 
 mod_folder = "E0_alwx/" #E0_slw E0_slwx E0_alwx
 mod_dir = "model/perception_"+trainmap+valmap+"/"+mod_folder
 save_dir = "prediction/"+mapx
 with open("dataset/"+mapx+"data_info.yml", 'r') as f:
 	test_info = yaml.load(f)
-listfiles = test_info['val_idx']
+listfiles = test_info['test_idx']
 listfiles.sort() 
 
 
