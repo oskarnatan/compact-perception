@@ -4,7 +4,13 @@ Implementation of:
 
 IEEEXplore: https://ieeexplore.ieee.org/abstract/document/9712213
 
+
+Steps:
+1. Download dataset and extract to subfolder dataset: https://drive.google.com/drive/folders/1kWz4IJw9V3Vt8BIbkO6rj8wDUk2X0E0p?usp=sharing
+2. Open train.py and check the configuration setting
+3. Python3 train.py, model and other metadata will be saved in subfolder model
+4. Python3 predict.py, prediction result will be saved in subfolder prediction
+
+
 To do list:
-1. DATA DOWNLOADER
-2. PREDICTION CODE
-3. E0 and E1 MODELS
+1. Train-val-test for NuScenes dataset
