@@ -8,9 +8,6 @@ import numpy as np
 import pandas as pd
 from tqdm import tqdm
 from collections import OrderedDict
-from contextlib import redirect_stdout
-
-import cv2
 from torch import torch, nn, optim, utils
 
 from mylib import arch, function, util
@@ -18,8 +15,8 @@ torch.backends.cudnn.benchmark = True
 device = torch.device("cuda:0")
 
 
-trainmap = 'Tr1' #Tr1 Tr12345 Tr2
-valmap = 'Va2' #Va2 Va12345 Va1
+trainmap = 'Tr1' # Tr12345 Tr1 Tr2
+valmap = 'Va2' # Va12345 Va2 Va1
 config = {
 	'data_dir'			: ['dataset/'+trainmap[:2]+'Set/', 'dataset/'+valmap[:2]+'Set/'], 
 	'data_split_info'	: ['dataset/'+trainmap+'/data_info.yml', 'dataset/'+valmap+'/data_info.yml'], 
@@ -27,7 +24,7 @@ config = {
 	'task'				: ['depth_f', 'depth_l', 'depth_ri', 'depth_r', 'segmentation_f', 'segmentation_l', 'segmentation_ri', 'segmentation_r', 'lid_seg_top', 'bird_view',],
 	'mod_dir'			: 'model/perception_'+trainmap+valmap+'/',
 	'arch'				: 'E0', #E0 For CARLA, E1 for NuScene
-	'tensor_dim'		: [6, [2, 3, 15], 128, 128], #format pytorch: batch_size x (channel RGB, DVS, lidar) x H x W
+	'tensor_dim'		: [6, [2, 3, 15], 128, 128], #format pytorch: batch_size x (channel DVS, RGB, lidar) x H x W
 	'adaptive_lw'		: True,
 	'loss_weights'		: [1, 1, 1, 1], #INITIAL LW DE, SS, BEVP, LS
 	'bottleneck'		: [168, 530], #check BOTTLENECK
@@ -36,9 +33,9 @@ config = {
 
 #load data split info
 with open(config['data_split_info'][0], 'r') as g:
-	info = yaml.load(g, Loader=yaml.FullLoader)
+	info = yaml.load(g)
 with open(config['data_split_info'][1], 'r') as g:
-	info_val = yaml.load(g, Loader=yaml.FullLoader)
+	info_val = yaml.load(g)
 
 
 
@@ -330,7 +327,7 @@ def main():
 
 	#OPTIMIZER
 	params = filter(lambda p: p.requires_grad, model.parameters())
-	optima = optim.SGD(params, lr=0.1, momentum=0.9, weight_decay=0.0001])
+	optima = optim.SGD(params, lr=0.1, momentum=0.9, weight_decay=0.0001)
 	scheduler = optim.lr_scheduler.ReduceLROnPlateau(optima, mode='min', factor=0.5, patience=4, min_lr=0.00001)
 
 	#LW MGN OPTIMIZER

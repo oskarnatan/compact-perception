@@ -32,7 +32,7 @@ class convBlock(nn.Module):
 
 #MODEL FOR CARLA DATASET
 class E0(nn.Module): 
-    def __init__(self, in_channel_dim=[3,2,1]): 
+    def __init__(self, in_channel_dim=[2, 3, 15]): 
         super().__init__()
         #OTHERS
         n_fmap_ch = [16, 32, 64, 128]
@@ -331,7 +331,7 @@ class E0(nn.Module):
 
 #MODEL FOR NUSCENE DATASET
 class E1(nn.Module): #
-    def __init__(self, in_channel_dim=[3,2,1]):
+    def __init__(self, in_channel_dim=[2, 3, 15]):
         super().__init__()
         #OTHERS
         n_fmap_ch = [16, 32, 64, 128]
