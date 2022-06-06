@@ -1,9 +1,8 @@
-import sys
-from torch import torch, cat, add, nn
+from torch import cat, nn
 
 
 #kaiming init
-def kaiming_w_init(layer, a=0, nonlinearity='relu'):
+def kaiming_w_init(layer):
     nn.init.kaiming_normal_(layer.weight)
     layer.bias.data.fill_(0.01)
 

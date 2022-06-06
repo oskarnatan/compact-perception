@@ -1,8 +1,6 @@
-import sys
 import cv2
 import numpy as np
-from torch import torch, utils
-import yaml
+from torch import utils
 
 
 class AverageMeter(object):
@@ -18,6 +16,26 @@ class AverageMeter(object):
         self.sum += val * n
         self.count += n
         self.avg = self.sum / self.count
+
+
+def blank_frame(rgb_color, target_dim, configx=None):
+    if configx is not None:
+        multiply_w = target_dim[1] / configx['tensor_dim'][3]
+        multiply_h = target_dim[0] / configx['tensor_dim'][2]
+        image = np.zeros((int(configx['tensor_dim'][3]*multiply_w), int(configx['tensor_dim'][2]*multiply_h), 3), np.uint8)
+    else:
+        image = np.zeros((target_dim[1], target_dim[0], 3), np.uint8)
+    image[:] = tuple(rgb_color)
+
+    return image
+
+
+def swap_RGB2BGR(matrix):
+    red = matrix[:,:,0].copy()
+    blue = matrix[:,:,2].copy()
+    matrix[:,:,0] = blue
+    matrix[:,:,2] = red
+    return matrix
 
 
 class datagen(utils.data.Dataset):
