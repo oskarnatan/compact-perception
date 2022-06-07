@@ -78,16 +78,6 @@ log = OrderedDict([
 	('test_seg_loss', []),
 	('test_lidseg_loss', []),
 	('test_bir_loss', [])])
-score = {'total_loss': util.AverageMeter(),
-		'total_metric': util.AverageMeter(),
-		'tot_depth_loss': util.AverageMeter(),
-		'tot_depth_metric': util.AverageMeter(),
-		'tot_seg_loss': util.AverageMeter(),
-		'tot_seg_metric': util.AverageMeter(),
-		'tot_lidseg_loss': util.AverageMeter(),
-		'tot_lidseg_metric': util.AverageMeter(),
-		'tot_bir_loss': util.AverageMeter(),
-		'tot_bir_metric': util.AverageMeter()}
 
 
 with torch.no_grad():
@@ -131,28 +121,18 @@ with torch.no_grad():
 		total_loss = tot_depth_loss + tot_seg_loss + tot_lidseg_loss + tot_bir_loss
 		total_metric = tot_depth_metric + (1 - tot_seg_metric) + (1 - tot_lidseg_metric) + (1 - tot_bir_metric)
 
-		score['total_loss'].update(total_loss.item(), 1) 
-		score['total_metric'].update(total_metric.item(), 1) 
-		score['tot_depth_loss'].update(tot_depth_loss.item(), 1)  
-		score['tot_depth_metric'].update(tot_depth_metric.item(), 1)  
-		score['tot_seg_loss'].update(tot_seg_loss.item(), 1)  
-		score['tot_seg_metric'].update(tot_seg_metric.item(), 1)  
-		score['tot_lidseg_loss'].update(tot_lidseg_loss.item(), 1)  
-		score['tot_lidseg_metric'].update(tot_lidseg_metric.item(), 1)  
-		score['tot_bir_loss'].update(tot_bir_loss.item(), 1)  
-		score['tot_bir_metric'].update(tot_bir_metric.item(), 1)  
 		log['batch'].append(batch)
 		log['forwardpass_time'].append(infer_time)
-		log['test_total_loss'].append(score['total_loss'].avg)
-		log['test_total_metric'].append(score['total_metric'].avg)
-		log['test_depth_loss'].append(score['tot_depth_loss'].avg)
-		log['test_depth_metric'].append(score['tot_depth_metric'].avg)
-		log['test_seg_loss'].append(score['tot_seg_loss'].avg)
-		log['test_seg_metric'].append(score['tot_seg_metric'].avg)
-		log['test_lidseg_loss'].append(score['tot_lidseg_loss'].avg)
-		log['test_lidseg_metric'].append(score['tot_lidseg_metric'].avg)
-		log['test_bir_loss'].append(score['tot_bir_loss'].avg)
-		log['test_bir_metric'].append(score['tot_bir_metric'].avg)
+		log['test_total_loss'].append(total_loss.item())
+		log['test_total_metric'].append(total_metric.item())
+		log['test_depth_loss'].append(tot_depth_loss.item())
+		log['test_depth_metric'].append(tot_depth_metric.item())
+		log['test_seg_loss'].append(tot_seg_loss.item())
+		log['test_seg_metric'].append(tot_seg_metric.item())
+		log['test_lidseg_loss'].append(tot_lidseg_loss.item())
+		log['test_lidseg_metric'].append(tot_lidseg_metric.item())
+		log['test_bir_loss'].append(tot_bir_loss.item())
+		log['test_bir_metric'].append(tot_bir_metric.item())
 		batch += 1
 			
 		#detach tensor
