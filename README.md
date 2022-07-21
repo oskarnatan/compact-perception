@@ -10,7 +10,7 @@ O. Natan and J. Miura, “Towards Compact Autonomous Driving Perception with Bal
 
 
 ## Steps:
-1. Download [the dataset](https://drive.google.com/drive/folders/1kWz4IJw9V3Vt8BIbkO6rj8wDUk2X0E0p?usp=sharing) and extract to subfolder dataset
+1. Download [the dataset](https://drive.google.com/file/d/1ZrsB2qeZRkJ_yfW5vnHmXLjO4d7AerzT/view?usp=sharing) and extract to subfolder dataset
 2. Open train.py and check the configuration setting inside
 3. python3 train.py, model and other metadata will be saved in subfolder model
 4. python3 predict.py, prediction result will be saved in subfolder prediction
